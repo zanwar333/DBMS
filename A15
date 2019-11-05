@@ -1,0 +1,96 @@
+
+
+
+create or replace trigger trigger1234
+after update or delete 
+on Library
+for each row
+
+begin
+
+insert into LibraryAudit values(:OLD.ISBN,:OLD.bookName,:OLD.qty);
+
+end trigger1234;
+
+
+
+
+select * from Library;
+
+ISBN	BOOKNAME	QTY
+101	Karna		2
+7	Java		1
+8	Python		8
+
+
+update Library set bookName = 'JJJ'  where ISBN = 7;
+
+select * from LibraryAudit;
+
+
+Oracle APEX Home
+
+    App Builder
+    SQL Workshop current
+    Team Development
+    App Gallery
+
+    SQL WorkshopSQL Commands
+
+Schema
+Rows
+SQL Command
+
+1
+
+select * from LibraryAudit;
+
+	
+ISBN	BOOKNAME	QTY
+8	Python		8
+8	Python		8
+101	Mrutyunjay	2
+103	Inferno		1
+7	Java		1
+7	Java		1
+6 rows returned in 0.00 seconds	      (here values from 2 triggers are returned).
+
+
+
+*************************************************************************************************
+
+
+
+
+SQL> create or replace trigger trigger1234
+  2  after update or delete
+  3  on Library for each row
+  4  begin
+  5  insert into LibraryAudit values(:NEW.ISBN,:NEW.bookName,:NEW.qty);
+  6  end trigger1234;
+  7  /
+
+Trigger created.
+
+SQL> select * from Library;
+
+      ISBN BOOKNAME		       QTY
+---------- -------------------- ----------
+	11 JJJ				30
+	13 PQR				10
+	14 IJK				77
+
+SQL> update Library set bookName = 'ABC' where ISBN = 11;
+
+1 row updated.
+
+Commit complete.
+SQL> select * from LibraryAudit;
+
+      ISBN BOOKNAME		       QTY
+---------- -------------------- ----------
+	11 JJJ				30
+	11 ABC				30
+
+SQL> 
+

@@ -1,0 +1,41 @@
+Assignment b7
+1)Encoding of json objects through java
+
+
+package assignmentb7;
+import java.util.ArrayList;
+import java.util.Arrays;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import java.util.logging.Level;
+
+
+public class sasaaa {
+	public static void main(String[] args) {
+		JSONObject obj = new JSONObject();
+		obj.put("name", "Ritesh");
+		obj.put("num", new Integer(200));
+		obj.put("balance", new Double(1000.21));
+		obj.put("is_vip", new Boolean(true));
+		System.out.println(obj);
+}
+}
+
+
+2) Decoding of json objects through java
+
+package assignmentb7;
+import java.util.ArrayList;
+import java.util.Arrays;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import java.util.logging.Level;
+public class sasaaa {
+	public static void main(String[] args) {
+		String s = "{\"name\":\"Ritesh\",\"marks\":500.00,\"roll\":56}";
+		Object o1 = JSONValue.parse(s);
+		JSONObject jsonObj = (JSONObject) o1;
+		String name = (String) jsonObj.get("name");
+		Long roll = (Long) jsonObj.get("roll");System.out.println(name + " " + roll);
+}
+}

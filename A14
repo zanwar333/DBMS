@@ -1,0 +1,147 @@
+--create table Library(ISBN number(4),bookName varchar2(20),qty number(4));
+--create table LibraryAudit(ISBN number(4),bookName varchar2(20),qty number(4));
+--insert into Library values (101,'Mrutyunjay',2);
+--insert into Library values (102,'Let C++',2);
+--insert into Library values (103,'Inferno',1);
+select * from Library;
+
+ISBN	BOOKNAME	QTY
+101	Mrutyunjay	2
+103	Inferno		1
+102	Let C++		2
+3 rows returned in 0.02 seconds	        	Download
+
+
+create or replace trigger trigger123
+before update or delete 
+on Library
+for each row
+
+begin
+ insert into LibraryAudit values(:OLD.ISBN,:OLD.bookName,:OLD.qty);
+ end trigger123;
+
+
+--update Library set bookName = 'Karna' where ISBN = 101;
+
+
+ISBN	BOOKNAME	QTY
+101	Karna		2
+103	Inferno		1
+102	Let C++		2
+
+
+select * from LibraryAudit;
+ISBN	BOOKNAME	QTY
+101	Mrutyunjay	2
+1 rows returned in 0.02 seconds	        	Download
+
+
+
+
+delete from Library where ISBN = 103;
+select * from Library;
+ISBN	BOOKNAME	QTY
+101	Karna		2
+102	Let C++		2
+
+
+select * from LibraryAudit
+ISBN	BOOKNAME	QTY
+101	Mrutyunjay	2
+103	Inferno		1
+2 rows returned in 0.00 seconds	        	Download
+2 rows returned in 0.00 seconds	        	Download
+
+
+****************************************************************************************************
+
+
+SQL> create table Library(ISBN number(4),bookName varchar2(20),qty number(4));
+
+Table created.
+
+SQL> create table LibraryAudit(ISBN number(4),bookName varchar2(20),qty number(4));
+
+Table created.
+
+SQL> insert into Library values(11,'ABC',30);
+
+1 row created.
+
+Commit complete.
+SQL> insert into Library values(12,'XYZ',50);
+
+1 row created.
+
+Commit complete.
+SQL> insert into Library values(13,'PQR',10);
+
+1 row created.
+
+Commit complete.
+SQL> select * from Library;
+
+      ISBN BOOKNAME		       QTY
+---------- -------------------- ----------
+	11 ABC				30
+	12 XYZ				50
+	13 PQR				10
+
+SQL> create or replace trigger trigger123 
+  2  before update or delete
+  3  on Library for each row
+  4  begin
+  5  insert into LibraryAudit values(:OLD.ISBN, :OLD.bookName,:OLD.qty);
+  6  end trigger123;
+  7  /
+
+Trigger created.
+
+SQL> update Library set bookName = 'EFG' where ISBN = 11;
+
+1 row updated.
+
+Commit complete.
+SQL> select * from Library;
+
+      ISBN BOOKNAME		       QTY
+---------- -------------------- ----------
+	11 EFG				30
+	12 XYZ				50
+	13 PQR				10
+
+SQL> select * from LibraryAudit;
+
+      ISBN BOOKNAME		       QTY
+---------- -------------------- ----------
+	11 ABC				30
+
+
+SQL> delete from Library where ISBN = 12;
+
+1 row deleted.
+
+Commit complete.
+SQL> select * from Library;
+
+      ISBN BOOKNAME		       QTY
+---------- -------------------- ----------
+	11 EFG				30
+	13 PQR				10
+
+SQL> select * from LibraryAudit;
+
+      ISBN BOOKNAME		       QTY
+---------- -------------------- ----------
+	11 ABC				30
+	12 XYZ				50
+
+SQL> 
+
+
+
+
+
+
+
